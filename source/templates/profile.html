@@ -1,0 +1,97 @@
+<{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+
+    <!-- This code is only meant for previewing your Reflow design. -->
+
+    <head>
+	<link rel="stylesheet" href='{% static "css/boilerplate.css" %}' >
+	<link rel="stylesheet" href='{% static "css/profile.css" %}' >
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+	<script>var __adobewebfontsappname__ = "reflow"</script>
+	<script src="http://use.edgefonts.net/abel:n4:all.js"></script>
+    </head>
+    <body>
+
+    <div id="primaryContainer" class="primaryContainer clearfix">
+        <p id="text">
+        <span id="textspan">Nextdoor</span><span id="textspan1">&nbsp;&nbsp;</span><br />
+        </p>
+        <p id="text1">
+        Profile Page
+        </p>
+        <div id="box" class="clearfix">
+            <img id="image" src="/media/{{info.uphoto}}" class="image" />
+            <p id="text2">
+            Name&#x3a;{{info.uname}}
+            </p>
+            <p id="text3">
+            Phone<br />Number&#x3a;{{info.uphone}}
+            </p>
+            <p id="text4">
+            Hood ID&#x3a;{{info.uhid}}
+            </p>
+            <p id="text5">
+            Email-Id&#x3a;{{info.uemail}}
+            </p>
+            <p id="text6">
+            Intro&#x3a;{{info.uintro}}
+            </p>
+            <p id="text7">
+            Hood&#x3a;{{info.uhood}}
+            </p>
+            <p id="text8">
+            Address&#x3a;{{info.uaddress}}
+            </p>
+        </div>
+        <div id="box1" class="clearfix">
+            <a href="enterurl">
+                <input id="input" type="button" value="Hood"></input>
+            </a>
+            <a href="enterurl">
+                <input id="input1" type="button" value="Block"></input>
+            </a>
+            <a href="enterurl">
+                <input id="input2" type="button" value="Friend"></input>
+            </a>
+        </div>
+        <div id="box2" class="clearfix">
+            <div id="box3" class="clearfix">
+                <p id="text9">
+                Available Blocks
+                </p>
+                {% for line in info_block %}
+                <input id="input{{forloop.counter0|add:value}}" type="button" value='{{line.bname}}'></input>
+                {% endfor %}
+            </div>
+            <div id="box4" class="clearfix">
+                <p id="text10">
+                Eligible Neighbour
+                </p>
+                {% for neighbour in info_friend %}
+                <input id="input{{forloop.counter0|add:value_neigh}}" type="button" value='{{neighbour.uname}}'></input>
+                {% endfor %}
+            </div>
+            <div id="box5" class="clearfix">
+                <p id="text11">
+                Eligible Friends
+                </p>
+                 {% for neighbour in info_friend %}
+                <input id="input{{forloop.counter0|add:value_neigh}}" type="button" value='{{neighbour.uname}}'></input>
+                {% endfor %}
+            </div>
+            <div id="box6" class="clearfix">
+                <p id="text12">
+                HOOD Messages
+                </p>
+                <p id="text13">
+                Message<br />
+                </p>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
+

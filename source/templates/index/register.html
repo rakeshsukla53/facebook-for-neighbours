@@ -1,0 +1,70 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+     <head>
+	<link rel="stylesheet" href='{% static "css/boilerplate.css" %}' />
+	<link rel="stylesheet" href='{% static "css/register.css" %}'>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+    </head>
+    <body>
+
+    <div id="primaryContainer" class="primaryContainer clearfix">
+        <p id="text">
+        <span id="textspan">Nextdoor</span><span id="textspan1">&nbsp;&nbsp;</span><span id="textspan2">The private social network for your neighborhood.&nbsp;</span><br />
+        </p>
+        <p id="text1">
+        Register Now
+        </p>
+	<form method="post" action="" enctype="multipart/form-data">
+		    {% csrf_token %}
+        <div id="box" class="clearfix">
+            <label id="formgroup">
+                <p id="id_uname">
+                Name:
+                </p>
+                <input id="textinput" maxlength="100" name="uname" type="text" value=""></input>
+             </label>
+            <label id="formgroup1">
+                <p id="id_upassword">
+                Password:
+                </p>
+                <input id="textinput1" maxlength="100" name="upassword" type="password" value=""></input>
+            </label>
+            <label id="formgroup2">
+                <p id="id_uphone">
+                Phone:
+                </p>
+                <input id="textinput2" name="uphone" maxlength="20" name="uphone" type="text" value=""></input>
+            </label>
+            <label id="formgroup3">
+                <p id="id_uemail">
+                Email:
+                </p>
+                <input id="textinput3" maxlength="254" name="uemail" type="email" value="rrs402@nyu.edu"></input>
+            </label>
+            <label id="formgroup4">
+                <p id="id_uintro">
+                Intro:
+                </p>
+                <textarea id="textinput4" cols="40" name="uintro" rows="10" ></textarea>
+            </label>
+            <label id="formgroup5">
+                <p id="id_uphoto">
+                Display Picture:
+                </p>
+                <input id="textinput5" name="uphoto" type="file" ></input>
+            </label>
+            <label id="formgroup6">
+                <p id="id_uaddress">
+                Address:
+                </p>
+                <input id="textinput6" maxlength="100" name="uaddress" type="text" value="ABC"></input>
+            </label>
+            <input id="input" type="submit" value="Register"></input>
+        </div>
+		</form>
+    </div>
+    </body>
+</html>
