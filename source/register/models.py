@@ -86,11 +86,14 @@ class Thread(models.Model):
         ('NEIGHBOUR', 'Neighbour')
     )
 
-    tid = models.IntegerField(primary_key=True)
+    tid = models.AutoField(primary_key=True)
     ttype = models.CharField(max_length=10, choices=TID_CHOICES)
     tauthor = models.ForeignKey('Registration')
     tdate = models.DateTimeField(auto_now=True)
     tdesc = models.TextField()
+
+    def __unicode__(self):
+        return unicode(self.tid)
 
 class Message(models.Model):
 
@@ -98,6 +101,9 @@ class Message(models.Model):
     mdate = models.DateTimeField(auto_now=True)
     mauthor = models.ForeignKey(Registration)
     mtext = models.TextField()
+
+    def __unicode__(self):
+        return unicode(self.mtext)
 
 class Authorize(models.Model):
     tid = models.ForeignKey(Thread)

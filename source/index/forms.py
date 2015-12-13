@@ -44,3 +44,8 @@ class MessageModelForm(forms.ModelForm):
         labels = {
             'mtext': 'Message',
         }
+
+    def clean_Message(self):
+
+        print "Rakesh"
+        print self.cleaned_data

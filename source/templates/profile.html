@@ -47,13 +47,13 @@
             </p>
         </div>
         <div id="box1" class="clearfix">
-            <a href="enterurl">
+            <a href="{% url 'user-thread' %}">
                 <input id="input" type="button" value="Hood"></input>
             </a>
-            <a href="enterurl">
+            <a href="{% url 'user-thread' %}">
                 <input id="input1" type="button" value="Block"></input>
             </a>
-            <a href="enterurl">
+            <a href="{% url 'user-thread' %}">
                 <input id="input2" type="button" value="Friend"></input>
             </a>
         </div>
@@ -71,7 +71,8 @@
                 Eligible Neighbour
                 </p>
                 {% for neighbour in info_friend %}
-                <input id="input{{forloop.counter0|add:value_neigh}}" type="button" value='{{neighbour.uname}}'></input>
+                <a href='{{neighbour.uname}}'>
+                <input id="input{{forloop.counter0|add:value_neigh}}" type="button" value='{{neighbour.uname}}'></input> </a>
                 {% endfor %}
             </div>
             <div id="box5" class="clearfix">

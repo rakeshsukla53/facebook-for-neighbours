@@ -1,0 +1,205 @@
+
+.primaryContainer {
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100%;
+    width: 100%;
+}
+
+#box {
+    float: left;
+    height: auto;
+    margin: 49px 0px 0px 31.595927%;
+    clear: none;
+    width: 36.669517%;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    -webkit-box-shadow: rgb(231, 230, 230) 0px 0px 3px 3px;
+    box-shadow: rgb(231, 230, 230) 0px 0px 3px 3px;
+}
+
+#text {
+    float: left;
+    font-size: 2.5em;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.5em;
+    margin-left: 0%;
+    margin-top: 0px;
+    clear: none;
+    min-height: 0px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border: 1px solid rgb(2, 126, 181);
+    background-color: rgb(2, 126, 181);
+    color: rgb(255, 255, 255);
+    font-family: georgia;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#formgroup {
+    float: left;
+    height: auto;
+    display: block;
+    text-align: left;
+    margin: 4px 10% 10px 3%;
+    clear: none;
+    width: 94%;
+    border: 0px solid rgb(235, 229, 229);
+}
+
+#select {
+    float: none;
+    height: auto;
+    padding: 0px;
+    font-size: 1em;
+    display: block;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 2px solid rgb(252, 252, 252);
+}
+
+#id_ttype {
+    float: none;
+    font-size: 1.2em;
+    width: auto;
+    height: auto;
+    text-align: left;
+    font-weight: 500;
+    line-height: 1em;
+    padding: 0.2em 0em;
+    display: block;
+    color: rgb(2, 126, 181);
+    font-family: georgia;
+}
+
+#formgroup1 {
+    float: left;
+    height: auto;
+    display: block;
+    text-align: left;
+    margin: 4px 10% 10px 3%;
+    clear: none;
+    width: 94%;
+}
+
+#textinput {
+    float: none;
+    height: 1.75em;
+    padding: 0px;
+    font-size: 1em;
+    display: block;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 2px solid rgb(252, 252, 252);
+}
+
+#id_tdesc {
+    float: none;
+    font-size: 1.2em;
+    width: auto;
+    height: auto;
+    text-align: left;
+    font-weight: 500;
+    line-height: 1em;
+    padding: 0.2em 0em;
+    display: block;
+    font-family: georgia;
+    color: rgb(2, 126, 181);
+}
+
+#box1 {
+    float: left;
+    height: auto;
+    margin: 10px 2px 2px 4%;
+    clear: both;
+    width: 92%;
+    background-color: rgb(240, 240, 240);
+}
+
+#box2 {
+    float: left;
+    height: auto;
+    margin: 10px 1px 1px 4%;
+    clear: both;
+    width: 92%;
+    background-color: rgb(240, 240, 240);
+}
+
+#box3 {
+    float: left;
+    height: auto;
+    margin: 7px 1px 1px 3.997981%;
+    clear: both;
+    width: 92%;
+    display: block;
+    background-color: rgb(240, 240, 240);
+}
+
+#formgroup2 {
+    float: left;
+    height: 222.375px;
+    display: block;
+    text-align: left;
+    margin: 4px 10% 10px 3%;
+    clear: none;
+    width: 94%;
+}
+
+#id_mtext {
+    float: none;
+    font-size: 1.2em;
+    width: auto;
+    height: auto;
+    text-align: left;
+    font-weight: 500;
+    line-height: 1em;
+    padding: 0.2em 0em;
+    display: block;
+    font-family: georgia;
+    color: rgb(2, 126, 181);
+}
+
+#textinput1 {
+    float: none;
+    height: 12.232421875em;
+    padding: 0px;
+    font-size: 1em;
+    display: block;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 2px solid rgb(252, 252, 252);
+}
+
+#input {
+    float: left;
+    height: 54px;
+    font-size: 1.7em;
+    margin: 11px 10px 10px 33.28%;
+    clear: both;
+    width: 33.919061%;
+    background-color: rgb(2, 126, 181);
+    color: rgb(255, 255, 255);
+    font-family: georgia;
+    font-weight: 500;
+    text-align: center;
+    border-color: rgb(2, 126, 181);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+

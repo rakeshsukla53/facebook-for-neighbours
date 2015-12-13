@@ -6,10 +6,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserModelForm, ThreadModelForm, MessageModelForm
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
-from register.models import Registration, History, Block, Hood
+from register.models import Registration, History, Block, Hood, Message, Thread, Neighbour
 from django.utils import timezone
-from django.views.generic import TemplateView
-
+from django.views.generic import TemplateView, View, CreateView
+from django.http import HttpResponse
+from django.utils.decorators import method_decorator
 
 def Login(request):
 
@@ -57,6 +58,7 @@ class RegistrationForm(FormView):
     form_class = UserModelForm
     success_url = '/home'
 
+
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
@@ -78,12 +80,31 @@ class RegistrationForm(FormView):
 class ThreadForm(FormView):
     template_name = 'thread.html'
     form_class = ThreadModelForm
-    success_url = '/success'
+    success_url = '/thread'
+    second_form = MessageModelForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ThreadForm, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         return super(ThreadForm, self).form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.get_form()
+        ttype = request.POST['ttype']
+        mauthor = request.user
+        mtext = request.POST['mtext']
+        tdesc = request.POST['tdesc']
+        t = Thread.objects.create(ttype=ttype, tauthor=Registration.objects.get(uname=request.user), tdesc=tdesc)
+        Message.objects.create(tid=Thread.objects.get(tid=t.tid), mauthor=Registration.objects.get(uname=request.user), mtext=mtext)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super(ThreadForm, self).get_context_data(**kwargs)
@@ -96,6 +117,9 @@ class ProfileTemplateView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
+        print request.user
+        print Registration.objects.all()
+        print Registration.objects.get(uname=request.user)
         context['info'] = Registration.objects.get(uname=request.user)
         context['info_block'] = Block.objects.filter(hid=context['info'].uhid)
         context['value'] = 3
@@ -104,4 +128,77 @@ class ProfileTemplateView(TemplateView):
         # objects get is for fetching only one row
         # objects filter is for fetching more than one row. You cannot fetch more than one row using get
         return self.render_to_response(context)
+
+class FeedTemplateView(TemplateView):
+
+    template_name = 'feed.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(FeedTemplateView, self).dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['Hood'] = Thread.objects.filter(ttype='HOOD')
+        context['Block'] = Thread.objects.filter(ttype='BLOCK')
+        context['value'] = 3
+        context['value1'] = 7
+        # objects get is for fetching only one row
+        # objects filter is for fetching more than one row. You cannot fetch more than one row using get
+        return self.render_to_response(context)
+
+class ThreadMessageForm(TemplateView):
+
+    template_name = 'message.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ThreadMessageForm, self).dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['form'] = MessageModelForm
+        context['messages'] = Message.objects.filter(tid=Thread.objects.filter(tid=kwargs['hood_id']))
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+
+        tid = kwargs['hood_id']
+        mtext = request.POST['mtext']
+        Message.objects.create(tid=Thread.objects.get(tid=tid), mauthor=Registration.objects.get(uname=request.user), mtext=mtext)
+        return HttpResponseRedirect('')
+
+class FriendView(CreateView):
+
+    def get(self, request, *args, **kwargs):
+        print request.GET, kwargs, request.user
+        Neighbour.objects.create(nuid1=Registration.objects.get(uname=request.user), nuid2=Registration.objects.get(uname=kwargs['friend_id']), hid=Hood.objects.get(hname=Registration.objects.get(uname=request.user).uhood))
+        return HttpResponse('Friend is now Added')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

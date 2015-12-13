@@ -1,0 +1,84 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+    <head>
+	<link rel="stylesheet" href='{% static "css/boilerplate.css" %}'>
+	<link rel="stylesheet" href='{% static "css/feed.css" %}'>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+	<script>var __adobewebfontsappname__ = "reflow"</script>
+	<script src="http://use.edgefonts.net/abel:n4:all.js"></script>
+    </head>
+    <body>
+
+    <div id="primaryContainer" class="primaryContainer clearfix">
+        <p id="text">
+        <span id="textspan">Nextdoor</span><span id="textspan1">&nbsp;</span><br />
+        </p>
+        <p id="text1">
+        Feed Page
+        </p>
+        <div id="box" class="clearfix">
+            <div id="box1" class="clearfix">
+                <p id="text2">
+                Hood
+                </p>
+                <div id="box2" class="clearfix">
+                    {% for hood_feed in Hood %}
+                    <a id="text{{forloop.counter0|add:value}}" href="{{hood_feed.tid}}">
+                    {{hood_feed.tdesc}}&nbsp;
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="box3" class="clearfix">
+                <p id="text6">
+                Block
+                </p>
+                <div id="box4" class="clearfix">
+                    {% for block_feed in Block %}
+                    <a id="text{{forloop.counter0|add:value1}}" href="{{block_feed.tid}}">
+                    {{block_feed.tdesc}}&nbsp;
+                    </a>
+                    {% endfor %}
+                    </a>
+
+                </div>
+            </div>
+            <div id="box5" class="clearfix">
+                <p id="text10">
+                Friend
+                </p>
+                <div id="box6" class="clearfix">
+                    <a id="text11" href="link">
+                    Text
+                    </a>
+                    <a id="text12" href="link">
+                    Text
+                    </a>
+                    <a id="text13" href="link">
+                    Text
+                    </a>
+                </div>
+            </div>
+            <div id="box7" class="clearfix">
+                <p id="text14">
+                Neighbour
+                </p>
+                <div id="box8" class="clearfix">
+                    <a id="text15" href="link">
+                    Text
+                    </a>
+                    <a id="text16" href="link">
+                    Text
+                    </a>
+                    <a id="text17" href="link">
+                    Text
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
