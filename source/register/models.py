@@ -62,6 +62,8 @@ class Friend(models.Model):
 
 
 class Neighbour(models.Model):
+    class Meta:
+        unique_together = (('nuid1', 'nuid2'),)
     nuid1 = models.ForeignKey('Registration')
     nuid2 = models.ForeignKey('Registration', related_name='+')
     hid = models.ForeignKey('Hood')

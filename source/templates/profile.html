@@ -22,19 +22,19 @@
         <p id="text1">
         Profile Page
         </p>
-        <div id="box" class="clearfix">
+        <div id="box" class="clearfix" style="font-size: 25px; width: 400px;">
             <img id="image" src="/media/{{info.uphoto}}" class="image" />
-            <p id="text2">
+            <p id="text2" >
             Name&#x3a;{{info.uname}}
             </p>
             <p id="text3">
-            Phone<br />Number&#x3a;{{info.uphone}}
+            PhoneNumber&#x3a;{{info.uphone}}
             </p>
             <p id="text4">
-            Hood ID&#x3a;{{info.uhid}}
+            Hood ID {{info.uhid}}
             </p>
             <p id="text5">
-            Email-Id&#x3a;{{info.uemail}}
+            Email {{info.uemail}}
             </p>
             <p id="text6">
             Intro&#x3a;{{info.uintro}}
@@ -44,6 +44,12 @@
             </p>
             <p id="text8">
             Address&#x3a;{{info.uaddress}}
+            </p>
+            <p id="text8">
+            block&#x3a;
+            {% if request_approve %}
+                {{ request_approve }}
+            {% endif %}
             </p>
         </div>
         <div id="box1" class="clearfix">
@@ -63,7 +69,8 @@
                 Available Blocks
                 </p>
                 {% for line in info_block %}
-                <input id="input{{forloop.counter0|add:value}}" type="button" value='{{line.bname}}'></input>
+                <a href='/block/{{line.bname}}'>
+                <input id="input{{forloop.counter0|add:value}}" type="button" value='{{line.bname}}'></input></a>
                 {% endfor %}
             </div>
             <div id="box4" class="clearfix">
@@ -87,8 +94,11 @@
                 <p id="text12">
                 HOOD Messages
                 </p>
-                <p id="text13">
-                Message<br />
+                <p id="text13"><a href="/feed">Click for Feed Messages</a>
+                {% if block_request %}
+                    <p id="text13"><a href="/block_request">You have one block request</a>
+                {% endif %}
+                <br />
                 </p>
             </div>
         </div>

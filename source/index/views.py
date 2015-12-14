@@ -7,6 +7,7 @@ from .forms import UserModelForm, ThreadModelForm, MessageModelForm
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from register.models import Registration, History, Block, Hood, Message, Thread, Neighbour
+from register.models import AuthBlock
 from django.utils import timezone
 from django.views.generic import TemplateView, View, CreateView
 from django.http import HttpResponse
@@ -80,7 +81,7 @@ class RegistrationForm(FormView):
 class ThreadForm(FormView):
     template_name = 'thread.html'
     form_class = ThreadModelForm
-    success_url = '/thread'
+    success_url = '/feed'
     second_form = MessageModelForm
 
     @method_decorator(login_required)
@@ -117,14 +118,18 @@ class ProfileTemplateView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        print request.user
-        print Registration.objects.all()
-        print Registration.objects.get(uname=request.user)
         context['info'] = Registration.objects.get(uname=request.user)
         context['info_block'] = Block.objects.filter(hid=context['info'].uhid)
         context['value'] = 3
-        context['info_friend'] = Registration.objects.filter(uhood=context['info'].uhood).exclude(uname=request.user)
+        names_to_exlude = [line.nuid2.uname for line in Neighbour.objects.filter(nuid1=Registration.objects.get(uname=request.user))]
+
+        context['info_friend'] = Registration.objects.filter(uhood=context['info'].uhood).exclude(uname__in=names_to_exlude).exclude(uname=request.user)
         context['value_neigh'] = 6
+        context['block_request'] = AuthBlock.objects.all()
+        for auth in AuthBlock.objects.all():
+            if auth.status:
+                context['request_approve'] = auth.bid
+                print auth.bid
         # objects get is for fetching only one row
         # objects filter is for fetching more than one row. You cannot fetch more than one row using get
         return self.render_to_response(context)
@@ -175,7 +180,28 @@ class FriendView(CreateView):
         Neighbour.objects.create(nuid1=Registration.objects.get(uname=request.user), nuid2=Registration.objects.get(uname=kwargs['friend_id']), hid=Hood.objects.get(hname=Registration.objects.get(uname=request.user).uhood))
         return HttpResponse('Friend is now Added')
 
+class BlockView(CreateView):
 
+    def get(self, request, *args, **kwargs):
+        print request.GET, kwargs, request.user
+        n = len(Block.objects.filter(hid=Hood.objects.get(hname=Registration.objects.get(uname=request.user).uhood)))
+        AuthBlock.objects.create(uid=Registration.objects.get(uname=request.user), bid=Block.objects.get(bname=kwargs['block_id']), total_request_required=n, approval_received=0)
+        return HttpResponse('Request is being sent for your block request')
+
+class BlockRequest(CreateView):
+
+    def get(self, request, *args, **kwargs):
+
+        for line in AuthBlock.objects.all():
+            line.approval_received += 1
+            if line.approval_received == line.total_request_required:
+                line.approved = True
+                line.status = True
+                line.save()
+                break
+            line.save()
+            break
+        return HttpResponse('Request is being approved now')
 
 
 
