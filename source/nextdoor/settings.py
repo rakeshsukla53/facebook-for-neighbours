@@ -100,6 +100,14 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rakesh.sukla53@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SENDSMS_BACKEND = 'sendsms.backends.console.SmsBackend'
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 

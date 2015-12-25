@@ -9,7 +9,8 @@
 	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
     </head>
     <body>
-
+    <a href="/feed/"><button>Feed</button></a>
+    <a href="/logout/"><button>Logout</button></a>
     <div id="primaryContainer" class="primaryContainer clearfix">
 	    <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
         <div id="box" class="clearfix">
@@ -33,7 +34,7 @@
             <div id="box2" class="clearfix">
                 <label id="formgroup1">
                     <p id="id_tdesc">
-                    Thread Description:<br />
+                    Thread Description:/Friend's Name:<br />
                     </p>
                     <textarea id="textinput" cols="40" name="tdesc" rows="10" >	</textarea>
                 </label>
@@ -50,5 +51,6 @@
         </div>
 		</form>
     </div>
+
     </body>
 </html>

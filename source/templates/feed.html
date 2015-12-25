@@ -11,7 +11,7 @@
 	<script src="http://use.edgefonts.net/abel:n4:all.js"></script>
     </head>
     <body>
-
+     <a href="/logout/"><button>Logout</button></a>
     <div id="primaryContainer" class="primaryContainer clearfix">
         <p id="text">
         <span id="textspan">Nextdoor</span><span id="textspan1">&nbsp;</span><br />
@@ -27,7 +27,13 @@
                 <div id="box2" class="clearfix">
                     {% for hood_feed in Hood %}
                     <a id="text{{forloop.counter0|add:value}}" href="{{hood_feed.tid}}">
-                    {{hood_feed.tdesc}}&nbsp;
+                        {% if search %}
+                            {% if search in hood_feed.tdesc %}
+                                {{hood_feed.tdesc}}&nbsp;
+                            {% endif %}
+                        {% else %}
+                                {{hood_feed.tdesc}}&nbsp;
+                        {% endif %}
                     </a>
                     {% endfor %}
                 </div>
@@ -51,15 +57,13 @@
                 Friend
                 </p>
                 <div id="box6" class="clearfix">
-                    <a id="text11" href="link">
-                    Text
-                    </a>
-                    <a id="text12" href="link">
-                    Text
-                    </a>
-                    <a id="text13" href="link">
-                    Text
-                    </a>
+                    {% for friend_feed in friend %}
+                        {% if friend_feed.tdesc == user  %}
+                            <a id="text{{forloop.counter0|add:value3}}" href="{{friend_feed.tid}}">
+                            {{friend_feed.tdesc}}&nbsp;
+                            </a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div id="box7" class="clearfix">
@@ -67,17 +71,22 @@
                 Neighbour
                 </p>
                 <div id="box8" class="clearfix">
-                    <a id="text15" href="link">
-                    Text
-                    </a>
-                    <a id="text16" href="link">
-                    Text
-                    </a>
-                    <a id="text17" href="link">
-                    Text
-                    </a>
+                    {% for neighbour_feed in neighbour %}
+                        {% if neighbour_feed.tdesc == user %}
+                            <a id="text{{forloop.counter0|add:value4}}" href="{{neighbour_feed.tid}}">
+                            {{neighbour_feed.tdesc}}&nbsp;
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+
                 </div>
             </div>
+        <form method="GET" action="/feed/" enctype="multipart/form-data">{% csrf_token %}
+            Search: <br>
+            <input type="text" name="Search" value="">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
         </div>
     </div>
     </body>

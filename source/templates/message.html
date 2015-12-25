@@ -1,45 +1,105 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-ul#menu {
-    padding: 0;
-}
 
-ul#menu li {
-    display: inline;
-}
+    <!-- This code is only meant for previewing your Reflow design. -->
 
-ul#menu li a {
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px 4px 0 0;
-}
+    <head>
+	<link rel="stylesheet" href="{% static "css/boilerplate.css" %}">
+	<link rel="stylesheet" href="{% static "css/message_board.css" %}">
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+	<script>var __adobewebfontsappname__ = "reflow"</script>
+	<script src="http://use.edgefonts.net/abel:n4:all.js"></script>
+    </head>
+    <body>
+     <a href="/logout/"><button>Logout</button></a>
+    <div id="primaryContainer" class="primaryContainer clearfix">
+        <p id="text">
+        Hood Messages
+        </p>
+        <div id="box" class="clearfix">
 
-ul#menu li a:hover {
-    background-color: orange;
-}
-</style>
-</head>
-<body>
+            {% for line in messages %}
+                {% if search %}
+                    {% if search in line.mtext %}
+                        <div id="box1" class="clearfix">
+                            <p id="text1">
+                            Date
+                            </p>
+                            <p id="text2">
+                            {{ line.mdate }}
+                            </p>
+                        </div>
+                        <div id="box2" class="clearfix">
+                            <p id="text4">
+                            User
+                            </p>
+                            <p id="text5">
+                            {{ line.mauthor }}
+                            </p>
 
-<h2>Hood Messages</h2>
+                        </div>
+                        <div id="box3" class="clearfix">
+                            <p id="text7">
+                            Message
+                            </p>
+                            {% if line.mdate > history %}
+                                <p id="text8" style="background-color: gold">{{ line.mtext }}<br />
+                            {% else %}
+                                <p id="text8"> {{ line.mtext }}<br />
+                            {% endif %}
+                            </p>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div id="box1" class="clearfix">
+                            <p id="text1">
+                            Date
+                            </p>
+                            <p id="text2">
+                            {{ line.mdate }}
+                            </p>
+                        </div>
+                        <div id="box2" class="clearfix">
+                            <p id="text4">
+                            User
+                            </p>
+                            <p id="text5">
+                            {{ line.mauthor }}
+                            </p>
 
-{% for line in messages %}
-<ul id="menu">
-  <li>{{ line.mdate }}</li>
-  <li>{{ line.mauthor }}</li>
-  <li>{{ line.mtext }}</li>
-</ul>
-{% endfor %}
-
-<form method="POST" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-<input type="submit" value="Submit">
- </form>
-
-</body>
+                        </div>
+                        <div id="box3" class="clearfix">
+                            <p id="text7">
+                            Message
+                            </p>
+                             {% if line.mdate > history %}
+                                <p id="text8" style="background-color: gold"> {{ line.mtext }}<br />
+                            {% else %}
+                                <p id="text8"> {{ line.mtext }}<br />
+                             {% endif %}
+                            </p>
+                        </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <form method="GET" action="{{ url }}" enctype="multipart/form-data">
+            Search: <br>
+            <input type="text" name="Search" value="">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+		<form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+        <label id="formgroup">
+            <p id="id_mtext">
+            Message<br />
+            </p>
+            <textarea id="textinput" cols="40" name="mtext" rows="10" ></textarea>
+        </label>
+        <input id="input" type="submit" value="Submit"></input>
+		</form>
+    </div>
+    </body>
 </html>
+

@@ -14,7 +14,7 @@
 	<script src="http://use.edgefonts.net/abel:n4:all.js"></script>
     </head>
     <body>
-
+    <a href="/logout/"><button>Logout</button></a>
     <div id="primaryContainer" class="primaryContainer clearfix">
         <p id="text">
         <span id="textspan">Nextdoor</span><span id="textspan1">&nbsp;&nbsp;</span><br />
@@ -31,10 +31,10 @@
             PhoneNumber&#x3a;{{info.uphone}}
             </p>
             <p id="text4">
-            Hood ID {{info.uhid}}
+            Hood ID: {{info.uhid}}
             </p>
             <p id="text5">
-            Email {{info.uemail}}
+            Email ID: {{info.uemail}}
             </p>
             <p id="text6">
             Intro&#x3a;{{info.uintro}}
@@ -61,6 +61,9 @@
             </a>
             <a href="{% url 'user-thread' %}">
                 <input id="input2" type="button" value="Friend"></input>
+            </a>
+            <a href="{% url 'user-map' %}">
+                <input id="input2" type="button" value="Map"></input>
             </a>
         </div>
         <div id="box2" class="clearfix">

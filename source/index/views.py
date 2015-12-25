@@ -12,7 +12,8 @@ from django.utils import timezone
 from django.views.generic import TemplateView, View, CreateView
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
-
+from django.core.mail import send_mail
+from django.shortcuts import render_to_response
 def Login(request):
 
     if request.method == "POST":
@@ -54,11 +55,11 @@ def Home(request):
 def Blog(request):
     return render(request, "index/blog.html", {})
 
+
 class RegistrationForm(FormView):
     template_name = 'index/register.html'
     form_class = UserModelForm
-    success_url = '/home'
-
+    success_url = '/login'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
@@ -68,15 +69,25 @@ class RegistrationForm(FormView):
         print form.cleaned_data
         user = form.cleaned_data['uname']
         password = form.cleaned_data['upassword']
-        email = form.cleaned_data['uemail']
-        # User.objects.create_user(username=user, email=email, password=password)
+        email = form.cleaned_data['uemail'].strip()
+        User.objects.create_user(username=user, email=email, password=password)
         form.save()  # I have to use signal here
+        send_mail('Registration Successful', 'Registration Successful', 'rrs402@nyu.edu',
+    [email], fail_silently=False)
+
         # you can easily just save the data
         # form.save()
         # this is how you will store and data here
         # name, address = form.cleaned_data['name'], form.cleaned_data['address']
         # Registration.objects.create(name=name, address=address)
         return super(RegistrationForm, self).form_valid(form)
+
+    def form_invalid(self, form):
+        """
+        If the form is invalid, re-render the context data with the
+        data-filled form and errors.
+        """
+        return HttpResponse('Form is invalid. Please add all the valid fields')
 
 class ThreadForm(FormView):
     template_name = 'thread.html'
@@ -143,13 +154,38 @@ class FeedTemplateView(TemplateView):
         return super(FeedTemplateView, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+
         context = self.get_context_data(**kwargs)
         context['Hood'] = Thread.objects.filter(ttype='HOOD')
         context['Block'] = Thread.objects.filter(ttype='BLOCK')
         context['value'] = 3
         context['value1'] = 7
+        context['value3'] = 11
+        context['value4'] = 11
+        context['friend'] = Thread.objects.filter(ttype='FRIEND')
+        context['neighbour'] = Thread.objects.filter(ttype='NEIGHBOUR')
+        context['user'] = str(request.user)
+        try:
+            context['search'] = request.GET['Search']
+        except:
+            pass
         # objects get is for fetching only one row
         # objects filter is for fetching more than one row. You cannot fetch more than one row using get
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+
+        # print request.POST['Search']
+        return HttpResponseRedirect('/feed')
+
+
+class MapsTemplateView(TemplateView):
+
+    template_name = 'maps.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        # context['maps'] =
         return self.render_to_response(context)
 
 class ThreadMessageForm(TemplateView):
@@ -161,9 +197,22 @@ class ThreadMessageForm(TemplateView):
         return super(ThreadMessageForm, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+
+        # for history in History.objects.filter(uid=Registration.objects.get(uname=request.user)):
+        #     for line in Message.objects.filter(tid=Thread.objects.filter(tid=kwargs['hood_id'])):
+        #         if line.mdate > history.logout_time:
+        #             print line.mtext
+        #
         context = self.get_context_data(**kwargs)
         context['form'] = MessageModelForm
         context['messages'] = Message.objects.filter(tid=Thread.objects.filter(tid=kwargs['hood_id']))
+        context['url'] = request.path
+        for line in History.objects.filter(uid=Registration.objects.get(uname=request.user)):
+            context['history'] = line.logout_time
+        try:
+            context['search'] = request.GET['Search']
+        except:
+            pass
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):

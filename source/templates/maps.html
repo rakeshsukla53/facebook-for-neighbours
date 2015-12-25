@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Google Maps Multiple Markers</title>
+  <script src="http://maps.google.com/maps/api/js?sensor=false"
+          type="text/javascript"></script>
+</head>
+<body>
+  <div id="map" style="width: 2000px; height: 1000px;"></div>
+
+  <script type="text/javascript">
+    var locations = [
+      ['42nd Street, Times Square', 40.756058, -73.987004, 4],
+      ['42nd Street, Bryant Park', 40.754799,  -73.984208, 5],
+      ['42nd Street, Pier 83' , 40.7610771, -73.9992529, 3],
+      ['42nd Street, 11th Avenue', 40.760593,-73.9979356, 2],
+      ['42nd Street, Chrysler Building' , 40.7513854, -73.9788372, 1]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: new google.maps.LatLng(40.756058,  -73.987004),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+</body>
+</html>
