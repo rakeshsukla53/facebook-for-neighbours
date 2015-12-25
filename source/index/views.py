@@ -13,7 +13,7 @@ from django.views.generic import TemplateView, View, CreateView
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.core.mail import send_mail
-from django.shortcuts import render_to_response
+
 def Login(request):
 
     if request.method == "POST":
